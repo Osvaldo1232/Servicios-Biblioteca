@@ -20,4 +20,9 @@ public interface PrestamoService {
                                               String alumnoNombre,
                                               String libroTitulo,
                                               EstatusPrestamo estatus);
+
+
+
+
+                                              
 }

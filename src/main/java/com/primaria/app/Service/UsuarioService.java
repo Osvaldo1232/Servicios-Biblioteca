@@ -1,5 +1,6 @@
 package com.primaria.app.Service;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,7 +29,9 @@ public class UsuarioService {
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
         return usuarioRepository.save(usuario);
     }
-
+  public Optional<Usuario> obtenerPorId(UUID id) {
+        return usuarioRepository.findById(id);
+    }
     public Optional<Usuario> authenticate(String email, String password) {
         Optional<Usuario> usuarioOpt = usuarioRepository.findByEmail(email);
 

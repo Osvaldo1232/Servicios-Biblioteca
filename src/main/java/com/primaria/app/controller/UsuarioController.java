@@ -5,7 +5,12 @@ import com.primaria.app.Model.*;
 import com.primaria.app.Service.UsuarioService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
+import java.util.Optional;
+import java.util.UUID;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +25,16 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
-    
+     @Operation(summary = "Obtener usuario por ID", description = "Retorna un usuario específico mediante su UUID")
+  
+    @GetMapping("/{id}")
+    public ResponseEntity<Usuario> obtenerPorId(
+            @Parameter(description = "UUID del usuario", required = true, example = "550e8400-e29b-41d4-a716-446655440000")
+            @PathVariable UUID id) {
+        Optional<Usuario> usuario = usuarioService.obtenerPorId(id);
+        return usuario.map(ResponseEntity::ok)
+                     .orElse(ResponseEntity.notFound().build());
+    }
 
     @PostMapping("/director")
     @Operation(summary = "Registrar Director")

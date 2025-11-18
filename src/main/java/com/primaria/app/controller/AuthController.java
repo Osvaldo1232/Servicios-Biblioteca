@@ -56,7 +56,7 @@ public class AuthController {
         if (usuarioOpt.isPresent()) {
             Usuario usuario = usuarioOpt.get();
             String token = jwtUtil.generateToken(usuario.getId(), usuario.getRol().name());
-            return ResponseEntity.ok(Map.of("token", token,  "rol", usuario.getRol().name(), "uuid", usuario.getId() ));
+            return ResponseEntity.ok(Map.of("token", token,  "rol", usuario.getRol().name(), "nombre",usuario.getNombre(), "nombreCompleto",usuario.getNombre()+" "+ usuario.getApellidoPaterno()+ " "+ usuario.getApellidoMaterno(), "uuid", usuario.getId() ));
         } else {
             return ResponseEntity.status(401).body(Map.of("error", "Credenciales inválidas"));
         }
