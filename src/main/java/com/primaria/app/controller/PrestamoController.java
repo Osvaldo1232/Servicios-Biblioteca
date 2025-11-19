@@ -2,8 +2,11 @@ package com.primaria.app.controller;
 
 import com.primaria.app.DTO.PrestamoDTO;
 import com.primaria.app.DTO.PrestamoDetalleDTO;
+import com.primaria.app.DTO.PrestamosResumenDTO;
 import com.primaria.app.Model.EstatusPrestamo;
 import com.primaria.app.Service.PrestamoService;
+import com.primaria.app.Service.PrestamoServices;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -20,9 +23,11 @@ import java.util.List;
 public class PrestamoController {
 
     private final PrestamoService prestamoService;
+    private final PrestamoServices prestamoServices;
 
-    public PrestamoController(PrestamoService prestamoService) {
+    public PrestamoController(PrestamoService prestamoService, PrestamoServices prestamoServices) {
         this.prestamoService = prestamoService;
+        this.prestamoServices = prestamoServices;
     }
 
     // ================== CREAR PRÉSTAMO ===================
@@ -89,4 +94,15 @@ public class PrestamoController {
     ) {
         return prestamoService.filtrarPrestamos(fechaPrestamo, alumnoNombre, libroTitulo, estatus);
     }
+    
+    
+    @Operation(
+            summary = "Obtener top 10 fechas con más préstamos",
+            description = "Devuelve las 10 fechas en las que se registraron más préstamos, acompañadas del total de préstamos por fecha."
+        )
+        
+        @GetMapping("/top10-fechas")
+        public List<PrestamosResumenDTO> obtenerTop10FechasConMasPrestamos() {
+            return prestamoServices.obtenerTop10FechasConMasPrestamos();
+        }
 }
