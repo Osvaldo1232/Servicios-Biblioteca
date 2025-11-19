@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.primaria.app.DTO.LibrosMasPrestadosDTO;
 import com.primaria.app.DTO.PrestamosResumenDTO;
 import com.primaria.app.repository.PrestamoRepository;
 
@@ -22,6 +23,12 @@ public class PrestamoServices {
                 .limit(10)
                 .toList();
     }
-
+    public List<LibrosMasPrestadosDTO> obtenerTop10LibrosMasPrestados() {
+        return prestamoRepository
+                .obtenerTop10LibrosMasPrestados()
+                .stream()
+                .limit(10)
+                .toList();
+    }
 
 }

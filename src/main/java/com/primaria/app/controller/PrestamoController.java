@@ -1,5 +1,6 @@
 package com.primaria.app.controller;
 
+import com.primaria.app.DTO.LibrosMasPrestadosDTO;
 import com.primaria.app.DTO.PrestamoDTO;
 import com.primaria.app.DTO.PrestamoDetalleDTO;
 import com.primaria.app.DTO.PrestamosResumenDTO;
@@ -105,4 +106,15 @@ public class PrestamoController {
         public List<PrestamosResumenDTO> obtenerTop10FechasConMasPrestamos() {
             return prestamoServices.obtenerTop10FechasConMasPrestamos();
         }
+    
+    @Operation(
+            summary = "Obtener los 10 libros más prestados",
+            description = "Devuelve una lista con los 10 libros que han sido prestados con mayor frecuencia, incluyendo el nombre del libro y el total de préstamos."
+    )
+   
+    @GetMapping("/top10-libros")
+    public List<LibrosMasPrestadosDTO> obtenerTop10Libros() {
+        return prestamoServices.obtenerTop10LibrosMasPrestados();
+    }
+
 }

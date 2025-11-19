@@ -1,5 +1,6 @@
 package com.primaria.app.repository;
 
+import com.primaria.app.DTO.LibrosMasPrestadosDTO;
 import com.primaria.app.DTO.PrestamosResumenDTO;
 import com.primaria.app.Model.Prestamo;
 
@@ -22,5 +23,16 @@ public interface PrestamoRepository extends JpaRepository<Prestamo, String> {
 		    ORDER BY SUM(p.cantidad) DESC
 		""")
 		List<PrestamosResumenDTO> obtenerTop10FechasConMasPrestamos();
-
+	
+	
+	 @Query("""
+		        SELECT new com.primaria.app.DTO.LibrosMasPrestadosDTO(
+		            p.libro.titulo, 
+		            SUM(p.cantidad)
+		        )
+		        FROM Prestamo p
+		        GROUP BY p.libro.titulo
+		        ORDER BY COUNT(p) DESC
+		        """)
+		    List<LibrosMasPrestadosDTO> obtenerTop10LibrosMasPrestados();
 }
