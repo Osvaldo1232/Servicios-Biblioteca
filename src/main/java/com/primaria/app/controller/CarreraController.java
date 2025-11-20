@@ -1,6 +1,7 @@
 package com.primaria.app.controller;
 
 import com.primaria.app.DTO.CarreraDTO;
+import com.primaria.app.DTO.LibroActivoDTO;
 import com.primaria.app.Model.Estatus;
 import com.primaria.app.Service.CarreraService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -41,5 +42,10 @@ public class CarreraController {
     @GetMapping
     public ResponseEntity<List<CarreraDTO>> listarCarreras() {
         return ResponseEntity.ok(carreraService.listarTodas());
+    }
+    @Operation(summary = "Carreras activos", description = "Carreras activos")
+    @GetMapping("/activosC")
+    public List<LibroActivoDTO> obtenerLibrosActivos() {
+        return carreraService.obtenerLibrosActivos();
     }
 }

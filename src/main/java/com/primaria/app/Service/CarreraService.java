@@ -1,6 +1,7 @@
 package com.primaria.app.Service;
 
 import com.primaria.app.DTO.CarreraDTO;
+import com.primaria.app.DTO.LibroActivoDTO;
 import com.primaria.app.Model.Carrera;
 import com.primaria.app.Model.Estatus;
 import com.primaria.app.repository.CarreraRepository;
@@ -71,6 +72,12 @@ public class CarreraService {
 
     private CarreraDTO convertirADTO(Carrera carrera) {
         return new CarreraDTO(carrera.getId(), carrera.getNombre(), carrera.getEstatus());
+    }
+    public List<LibroActivoDTO> obtenerLibrosActivos() {
+        return carreraRepository.findByEstatus(Estatus.ACTIVO)
+                .stream()
+                .map(libro -> new LibroActivoDTO(libro.getId(), libro.getNombre()))
+                .toList();
     }
 
 

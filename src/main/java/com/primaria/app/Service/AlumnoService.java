@@ -1,6 +1,7 @@
 package com.primaria.app.Service;
 
 import com.primaria.app.DTO.AlumnoDTO;
+import com.primaria.app.DTO.LibroActivoDTO;
 import com.primaria.app.Model.Alumno;
 import com.primaria.app.Model.Carrera;
 import com.primaria.app.Model.Estatus;
@@ -99,5 +100,11 @@ public class AlumnoService {
                 alumno.getCarrera().getNombre(),
                 alumno.getEstatus()
         );
+    }
+    public List<LibroActivoDTO> obtenerLibrosActivos() {
+        return alumnoRepository.findByEstatus(Estatus.ACTIVO)
+                .stream()
+                .map(libro -> new LibroActivoDTO(libro.getId(), libro.getNombre()+" "+ libro.getApellidoPaterno()+ " " + libro.getApellidoMaterno()))
+                .toList();
     }
 }

@@ -1,5 +1,6 @@
 package com.primaria.app.Service;
 
+import com.primaria.app.DTO.LibroActivoDTO;
 import com.primaria.app.DTO.LibroCategoriaDTO;
 import com.primaria.app.DTO.LibroDTO;
 import com.primaria.app.Model.Autores;
@@ -156,5 +157,11 @@ public class LibroService {
         }
 
         return dto;
+    }
+    public List<LibroActivoDTO> obtenerLibrosActivos() {
+        return libroRepository.findByEstatus(Estatus.ACTIVO)
+                .stream()
+                .map(libro -> new LibroActivoDTO(libro.getId(), libro.getTitulo()))
+                .toList();
     }
 }

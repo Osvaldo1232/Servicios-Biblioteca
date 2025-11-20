@@ -1,6 +1,7 @@
 package com.primaria.app.controller;
 
 import com.primaria.app.DTO.AlumnoDTO;
+import com.primaria.app.DTO.LibroActivoDTO;
 import com.primaria.app.Model.Estatus;
 import com.primaria.app.Service.AlumnoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -41,5 +42,10 @@ public class AlumnoController {
     @GetMapping
     public ResponseEntity<List<AlumnoDTO>> listarAlumnos() {
         return ResponseEntity.ok(alumnoService.listarTodos());
+    }
+    @Operation(summary = "Alumnos activos", description = "Alumnos activos")
+    @GetMapping("/activosAL")
+    public List<LibroActivoDTO> obtenerLibrosActivos() {
+        return alumnoService.obtenerLibrosActivos();
     }
 }

@@ -1,5 +1,6 @@
 package com.primaria.app.controller;
 
+import com.primaria.app.DTO.LibroActivoDTO;
 import com.primaria.app.DTO.LibroCategoriaDTO;
 import com.primaria.app.DTO.LibroDTO;
 import com.primaria.app.Service.LibroService;
@@ -70,4 +71,10 @@ public class LibroController {
         LibroDTO actualizado = libroService.cambiarEstatus(id, nuevoEstatus);
         return ResponseEntity.ok(actualizado);
     }
+    @Operation(summary = "Libros activos", description = "Libros activos")
+    @GetMapping("/activosl")
+    public List<LibroActivoDTO> obtenerLibrosActivos() {
+        return libroService.obtenerLibrosActivos();
+    }
 }
+

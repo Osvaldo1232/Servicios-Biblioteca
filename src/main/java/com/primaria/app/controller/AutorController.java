@@ -1,6 +1,7 @@
 package com.primaria.app.controller;
 
 import com.primaria.app.DTO.AutorDTO;
+import com.primaria.app.DTO.LibroActivoDTO;
 import com.primaria.app.Service.AutorService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

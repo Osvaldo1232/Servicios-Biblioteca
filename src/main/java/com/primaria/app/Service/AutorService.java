@@ -1,7 +1,9 @@
 package com.primaria.app.Service;
 
 import com.primaria.app.DTO.AutorDTO;
+import com.primaria.app.DTO.LibroActivoDTO;
 import com.primaria.app.Model.Autores;
+import com.primaria.app.Model.Estatus;
 import com.primaria.app.repository.AutorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
