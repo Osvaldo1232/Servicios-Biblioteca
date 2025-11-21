@@ -36,25 +36,34 @@ public class LibroService {
         this.modelMapper = modelMapper;
     }
 
-    // Listar todos los libros
-    public List<LibroCategoriaDTO> listarTodos() {
-        return libroRepository.findAll()
-                .stream()
-                .map(libro -> new LibroCategoriaDTO(
-                        libro.getId(),
-                        libro.getTitulo(),
-                        libro.getAutores().stream()
-                                .map(a -> a.getNombre() + " " + a.getApellidoPaterno())
-                                .collect(Collectors.toList()),
-                        libro.getAnioPublicacion(),
-                        libro.getEditorial(),
-                        libro.getCopiasDisponibles(),
-                        libro.getCategoria().getId(),
-                        libro.getCategoria().getNombre(),
-                        libro.getEstatus().name()
-                ))
-                .collect(Collectors.toList());
-    }
+  public List<LibroCategoriaDTO> listarTodos() {
+    return libroRepository.findAll()
+            .stream()
+            .map(libro -> new LibroCategoriaDTO(
+                    libro.getId(),
+                    libro.getTitulo(),
+
+                    // Lista de nombres de autores
+                    libro.getAutores().stream()
+                            .map(a -> a.getNombre() + " " + a.getApellidoPaterno())
+                            .collect(Collectors.toList()),
+
+                    // Lista de IDs de autores  <-- NUEVO
+                    libro.getAutores().stream()
+                            .map(a -> a.getId())
+                            .collect(Collectors.toList()),
+
+                    libro.getAnioPublicacion(),
+                    libro.getEditorial(),
+                    libro.getCopiasDisponibles(),
+                    libro.getCategoria().getId(),
+                    libro.getCategoria().getNombre(),
+                    libro.getEstatus().name()
+            ))
+            .collect(Collectors.toList());
+}
+
+
 
     // Obtener libro por ID
     public Optional<LibroDTO> obtenerPorId(String id) {

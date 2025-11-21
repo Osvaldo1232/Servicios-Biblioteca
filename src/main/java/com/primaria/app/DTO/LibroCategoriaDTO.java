@@ -6,7 +6,8 @@ public class LibroCategoriaDTO {
 
     private String id;
     private String titulo;
-    private List<String> autores; // ahora es una lista de nombres
+    private List<String> autores; 
+    private List<String> autoresIds;  // <-- NUEVO
     private Integer anioPublicacion;
     private String editorial;
     private Integer copiasDisponibles;
@@ -16,13 +17,21 @@ public class LibroCategoriaDTO {
 
     public LibroCategoriaDTO() {}
 
-    public LibroCategoriaDTO(String id, String titulo, List<String> autores,
-                             Integer anioPublicacion, String editorial,
-                             Integer copiasDisponibles, String categoriaId,
-                             String categoriaNombre, String estatus) {
+    public LibroCategoriaDTO(
+            String id, String titulo,
+            List<String> autores,
+            List<String> autoresIds,     // <-- NUEVO
+            Integer anioPublicacion,
+            String editorial,
+            Integer copiasDisponibles,
+            String categoriaId,
+            String categoriaNombre,
+            String estatus) {
+
         this.id = id;
         this.titulo = titulo;
         this.autores = autores;
+        this.autoresIds = autoresIds;   // <-- NUEVO
         this.anioPublicacion = anioPublicacion;
         this.editorial = editorial;
         this.copiasDisponibles = copiasDisponibles;
@@ -31,7 +40,7 @@ public class LibroCategoriaDTO {
         this.estatus = estatus;
     }
 
-    // Getters y Setters
+    // Getters y setters
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 
@@ -40,6 +49,9 @@ public class LibroCategoriaDTO {
 
     public List<String> getAutores() { return autores; }
     public void setAutores(List<String> autores) { this.autores = autores; }
+
+    public List<String> getAutoresIds() { return autoresIds; }
+    public void setAutoresIds(List<String> autoresIds) { this.autoresIds = autoresIds; }
 
     public Integer getAnioPublicacion() { return anioPublicacion; }
     public void setAnioPublicacion(Integer anioPublicacion) { this.anioPublicacion = anioPublicacion; }
