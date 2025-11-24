@@ -6,6 +6,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.primaria.app.DTO.UsuarioInfoDTO;
 import com.primaria.app.Model.Usuario;
 import com.primaria.app.repository.UsuarioRepository;
 
@@ -48,5 +49,18 @@ public class UsuarioService {
     
     public Optional<Usuario> findByEmail(String email) {
         return usuarioRepository.findByEmail(email);
+    }
+
+
+      public UsuarioInfoDTO obtenerUsuarioInfo(UUID idUsuario) {
+
+        Usuario usuario = usuarioRepository.findById(idUsuario)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + idUsuario));
+
+        return new UsuarioInfoDTO(
+                usuario.getNombre(),
+                usuario.getNombreCompleto(),
+                usuario.getRol().name()
+        );
     }
 }

@@ -26,13 +26,14 @@ public interface PrestamoRepository extends JpaRepository<Prestamo, String> {
 	
 	
 	 @Query("""
-		        SELECT new com.primaria.app.DTO.LibrosMasPrestadosDTO(
-		            p.libro.titulo, 
-		            SUM(p.cantidad)
-		        )
-		        FROM Prestamo p
-		        GROUP BY p.libro.titulo
-		        ORDER BY COUNT(p) DESC
-		        """)
-		    List<LibrosMasPrestadosDTO> obtenerTop10LibrosMasPrestados();
+    SELECT new com.primaria.app.DTO.LibrosMasPrestadosDTO(
+        p.libro.titulo, 
+        SUM(p.cantidad)
+    )
+    FROM Prestamo p
+    GROUP BY p.libro.titulo
+    ORDER BY SUM(p.cantidad) DESC
+    """)
+List<LibrosMasPrestadosDTO> obtenerTop10LibrosMasPrestados();
+
 }

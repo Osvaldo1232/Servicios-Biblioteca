@@ -1,11 +1,15 @@
 package com.primaria.app.controller;
 
 import com.primaria.app.DTO.UsuarioDTO;
+import com.primaria.app.DTO.UsuarioInfoDTO;
 import com.primaria.app.Model.*;
 import com.primaria.app.Service.UsuarioService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.Optional;
@@ -48,5 +52,20 @@ public class UsuarioController {
         director.setRol(Rol.ADMINISTRADOR);
         usuarioService.save(director);
         return ResponseEntity.ok("Director registrado exitosamente");
+    }
+
+    @Operation(
+            summary = "Obtener información básica del usuario",
+            description = "Devuelve el nombre, nombre completo y rol del usuario basándose en su ID UUID."
+    )
+    @GetMapping("loguedo/{id}")
+    public UsuarioInfoDTO obtenerInfo(
+            @Parameter(
+                    description = "ID del usuario (UUID)",
+                    required = true
+            )
+            @PathVariable UUID id
+    ) {
+        return usuarioService.obtenerUsuarioInfo(id);
     }
 }
