@@ -116,7 +116,7 @@ public class SecurityConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .servers(List.of(
-                    new Server().url("http://comfortable-venus-utsemintegradora-bc614320.koyeb.app")
+                    new Server().url("https://comfortable-venus-utsemintegradora-bc614320.koyeb.app")
                 ));
     }
      
