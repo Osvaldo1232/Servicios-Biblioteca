@@ -14,7 +14,6 @@ import org.springframework.stereotype.Repository;
 public interface PrestamoRepository extends JpaRepository<Prestamo, String> {
 	@Query("""
 		    SELECT new com.primaria.app.DTO.PrestamosResumenDTO(
-		        p.libro.titulo,
 		        p.fechaPrestamo,
 		        SUM(p.cantidad)
 		    )
