@@ -101,7 +101,7 @@ public class SecurityConfig {
             "http://localhost:8000",
             "https://unusual-sharyl-utsemintegradora-3bae85c1.koyeb.app",
             "https://pleasant-sara-utsemintegradora-0944b8c7.koyeb.app"));  // frontend Angular
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATH"));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
         config.setMaxAge(3600L);
@@ -112,14 +112,7 @@ public class SecurityConfig {
         return source;
     }
     
-     @Bean
-    public OpenAPI customOpenAPI() {
-        return new OpenAPI()
-                .servers(List.of(
-                    new Server().url("https://unusual-sharyl-utsemintegradora-3bae85c1.koyeb.app")
-                ));
-    }
-    
+     
     // AuthenticationManager para poder usarlo en controladores si se necesita
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
