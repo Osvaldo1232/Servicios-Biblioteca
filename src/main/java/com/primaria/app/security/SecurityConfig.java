@@ -99,7 +99,7 @@ public class SecurityConfig {
             "http://localhost:4200",
             "http://localhost:8100",
             "http://localhost:8000",
-            "http://comfortable-venus-utsemintegradora-bc614320.koyeb.app",
+            "https://comfortable-venus-utsemintegradora-bc614320.koyeb.app",
             "https://pleasant-sara-utsemintegradora-0944b8c7.koyeb.app"));  // frontend Angular
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         config.setAllowedHeaders(List.of("*"));
