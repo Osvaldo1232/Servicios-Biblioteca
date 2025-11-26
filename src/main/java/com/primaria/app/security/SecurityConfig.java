@@ -19,9 +19,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.primaria.app.Service.UsuarioService;
 
-import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.servers.Server;
-
 import java.util.List;
 
 @Configuration
@@ -33,26 +30,22 @@ public class SecurityConfig {
         this.usuarioService = usuarioService;
     }
 
-    // Servicio para cargar usuarios desde la base de datos
     @Bean
     public UserDetailsService userDetailsService() {
-        return email -> usuarioService
-                .findByEmail(email)
-                .map(usuario -> org.springframework.security.core.userdetails.User.builder()
+        return email -> usuarioService.findByEmail(email)
+                .map(usuario -> User.builder()
                         .username(usuario.getEmail())
                         .password(usuario.getPassword())
                         .roles(usuario.getRol().name())
                         .build())
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
     }
 
-    // Codificador de contraseñas
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    // Proveedor de autenticación que usa el servicio anterior
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
@@ -61,19 +54,22 @@ public class SecurityConfig {
         return provider;
     }
 
-    // Cadena de filtros de seguridad
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .csrf(csrf -> csrf.disable())
+            .cors(Customizer.withDefaults())
+            .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .formLogin(form -> form.disable())
+            .httpBasic(httpBasic -> httpBasic.disable())
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
                     "/swagger-ui.html",
                     "/swagger-ui/**",
                     "/v3/api-docs/**",
-                    "/v3/api-docs.yaml",
-                    "/v3/api-docs.json",
                     "/Autenticacion/login",
+
+                    // Rutas públicas si así lo decides
                     "/usuarios/**",
                     "/libros/**",
                     "/categorias/**",
@@ -83,25 +79,22 @@ public class SecurityConfig {
                     "/prestamos/**"
                 ).permitAll()
                 .anyRequest().authenticated()
-            )
-            .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .formLogin(form -> form.disable())
-            .httpBasic(httpBasic -> httpBasic.disable())
-            .cors(Customizer.withDefaults()); // <-- usar el nuevo método para habilitar CORS con la configuración definida
+            );
 
         return http.build();
     }
-    
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of( 
-            "http://localhost:4200",
-            "http://localhost:8100",
-            "http://localhost:8000",
-            "https://comfortable-venus-utsemintegradora-bc614320.koyeb.app",
-            "https://pleasant-sara-utsemintegradora-0944b8c7.koyeb.app"));  // frontend Angular
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
+        config.setAllowedOrigins(List.of(
+                "http://localhost:4200",
+                "http://localhost:8100",
+                "http://localhost:8000",
+                "https://comfortable-venus-utsemintegradora-bc614320.koyeb.app",
+                "https://pleasant-sara-utsemintegradora-0944b8c7.koyeb.app"
+        ));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
         config.setMaxAge(3600L);
@@ -111,10 +104,7 @@ public class SecurityConfig {
 
         return source;
     }
-    
-   
-     
-    // AuthenticationManager para poder usarlo en controladores si se necesita
+
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
         AuthenticationManagerBuilder builder = http.getSharedObject(AuthenticationManagerBuilder.class);
