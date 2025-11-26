@@ -112,13 +112,7 @@ public class SecurityConfig {
         return source;
     }
     
-       @Bean
-    public OpenAPI customOpenAPI() {
-        return new OpenAPI()
-                .servers(List.of(
-                    new Server().url("https://comfortable-venus-utsemintegradora-bc614320.koyeb.app")
-                ));
-    }
+   
      
     // AuthenticationManager para poder usarlo en controladores si se necesita
     @Bean
